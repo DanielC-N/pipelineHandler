@@ -1,6 +1,6 @@
-const PipelineHandler = require('../dist/main');
-const { Proskomma } = require('proskomma');
-const usfm2perf = require('../data/transforms/usfm2perf');
+const PipelineHandler = require("../dist/main");
+const { Proskomma } = require("proskomma");
+const usfm2perf = require("../data/transforms/usfm2perf");
 const usfm2perfPipeline = require("../data/pipelines/usfm2perfPipeline.json");
 const fse = require("fs-extra");
 const path = require("path");
