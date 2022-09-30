@@ -6,18 +6,17 @@ class PipelineHandler {
      * @param {JSON[]} transforms - a list of the transforms
      * @param {boolean} verbose - print pipeline reading step by step
      */
-    constructor(proskomma, pipelines, transforms, verbose=false) {
-        if (!proskomma) {
-            throw new Error("Proskomma instance must be given");
+    constructor(pipelines, transforms, proskomma = null, verbose=false) {
+        if (proskomma !== null) {
+            this.proskomma = proskomma;
+            const query = "{ id }";
+            const content = proskomma.gqlQuerySync(query) || {};
+    
+            if (!content || !content.data.id) {
+                throw new Error("Provided Proskomma instance does not have any ID");
+            }
         }
-        const query = "{ id }";
-        const content = proskomma.gqlQuerySync(query) || {};
 
-        if (!content || !content.data.id) {
-            throw new Error("Provided Proskomma instance does not have any ID");
-        }
-
-        this.proskomma = proskomma;
         this.pipelines = pipelines;
         this.transforms = transforms;
         this.verbose = verbose;
@@ -25,6 +24,10 @@ class PipelineHandler {
 
     getProskomma() {
         return this.proskomma;
+    }
+
+    setProskomma(proskomma) {
+        this.proskomma = proskomma;
     }
 
     /**
@@ -36,7 +39,7 @@ class PipelineHandler {
      */
     getPipeline(pipelineName, data) {
         if (!this.pipelines[pipelineName]) {
-            throw new Error(`Unknown report name '${pipelineName}'`);
+            throw new Error(`Unknown pipeline name '${pipelineName}'`);
         }
         const pipeline = this.pipelines[pipelineName];
         const inputSpecs = pipeline[0].inputs;

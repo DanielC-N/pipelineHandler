@@ -5,7 +5,7 @@ const usfm2perfPipeline = require("../data/pipelines/usfm2perfPipeline.json");
 const fse = require("fs-extra");
 const path = require("path");
 
-const pipelineH = new PipelineHandler(new Proskomma(), {usfm2perfPipeline}, {usfm2perf}, true);
+const pipelineH = new PipelineHandler({usfm2perfPipeline}, {usfm2perf}, new Proskomma(), true);
 
 const usfmContent = fse.readFileSync(path.resolve(__dirname, "../data/usfms/titus.usfm")).toString();
 
