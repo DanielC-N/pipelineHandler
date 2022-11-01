@@ -2,15 +2,12 @@ const PipelineHandler = require("../dist/main");
 const { Proskomma } = require("proskomma");
 const fse = require("fs-extra");
 const path = require("path");
-const test = require('tape');
-
-const testGroup = 'Lexing Badness';
 
 const pipelineH = new PipelineHandler({proskomma:new Proskomma(), verbose:true});
 
-const usfmContent = fse.readFileSync(path.resolve(__dirname, "../data/usfms/titus.usfm")).toString();
+const perfContent = fse.readJsonSync(path.resolve(__dirname, "../data/usfms/titus_aligned_eng.json"));
 
-async function saveFile(file, rpath="./output.json") {
+async function saveFile(file, rpath="./output_perf.usfm") {
     try {
         if(typeof file === "string") {
             let thepath = rpath;
@@ -24,11 +21,10 @@ async function saveFile(file, rpath="./output.json") {
 }
 
 async function test() {
-    let output = await pipelineH.runPipeline("usfm2perfPipeline", {
-        usfm: usfmContent,
-        selectors: {"lang": "fra", "abbr": "ust"}
+    let output = await pipelineH.runPipeline("perf2usfmPipeline", {
+        perf: perfContent
     });
-    await saveFile(JSON.stringify(output, null, 2));
+    await saveFile(output.usfm);
 }
 
 test();

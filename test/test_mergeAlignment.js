@@ -1,12 +1,11 @@
 const PipelineHandler = require("../dist/main");
 const { Proskomma } = require("proskomma");
+const usfm2perf = require("../src/transforms/usfm2perf");
+const usfm2perfPipeline = require("../src/pipelines/usfm2perfPipeline.json");
 const fse = require("fs-extra");
 const path = require("path");
-const test = require('tape');
 
-const testGroup = 'Lexing Badness';
-
-const pipelineH = new PipelineHandler({proskomma:new Proskomma(), verbose:true});
+const pipelineH = new PipelineHandler({usfm2perfPipeline}, {usfm2perf}, new Proskomma(), true);
 
 const usfmContent = fse.readFileSync(path.resolve(__dirname, "../data/usfms/titus.usfm")).toString();
 

@@ -1,3 +1,6 @@
+import officalPipelines from "../pipelines";
+import officalTransforms from "../transforms";
+
 class PipelineHandler {
     /**
      * 
@@ -6,7 +9,7 @@ class PipelineHandler {
      * @param {JSON[]} transforms - a list of the transforms
      * @param {boolean} verbose - print pipeline reading step by step
      */
-    constructor(pipelines, transforms, proskomma = null, verbose=false) {
+    constructor({pipelines = null, transforms = null, proskomma = null, verbose=false}) {
         if (proskomma !== null) {
             this.proskomma = proskomma;
             const query = "{ id }";
@@ -17,8 +20,15 @@ class PipelineHandler {
             }
         }
 
-        this.pipelines = pipelines;
-        this.transforms = transforms;
+        this.pipelines = officalPipelines;
+        this.transforms = officalTransforms;
+
+        if(pipelines !== null) {
+            this.pipelines.concat(pipelines);
+        }
+        if(transforms !== null) {
+            this.transforms.concat(transforms);
+        }
         this.verbose = verbose;
     }
 

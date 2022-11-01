@@ -1,3 +1,3 @@
-import PipelineHandler from '../classes/PipelineHandler';
+import PipelineHandler from './classes/PipelineHandler';
 
 module.exports = PipelineHandler;

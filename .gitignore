@@ -2,6 +2,7 @@
 dist/
 alignedtext*
 output.json
+test/outputs
 
 # Logs
 logs
